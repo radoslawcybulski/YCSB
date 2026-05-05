@@ -111,7 +111,8 @@ public class OneMeasurementHdrHistogram extends OneMeasurement {
    * Using {@link Recorder} to support concurrent updates to histogram.
    */
   public void measure(long latencyInMicros) {
-    histogram.recordValue(latencyInMicros);
+    // sct consumes hdr histograms expecting those to be in nanoseconds, so we adjust here.
+    histogram.recordValue(latencyInMicros * 1000);
   }
 
   /**
